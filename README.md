@@ -1,16 +1,38 @@
-# React + Vite
+# StudyFlow
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+StudyFlow is a web application designed to help students track and improve their study habits. The app allows users to record study sessions, organize them by subject, and view visual summaries of their productivity. Its goal is to provide a simple and motivating tool that works like a smartphone screen-time dashboard, but specifically for studying.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+### Study Timer
+The main feature of StudyFlow is a built-in study timer. Users can select a subject, such as Math, Computer Science, or Economics, and start a timer when they begin studying. The timer supports two modes: a free-running stopwatch and a Pomodoro-style countdown timer with preset or customizable intervals. When a study session ends, the time studied is automatically saved in the app.
 
-## React Compiler
+### Dashboard & Analytics
+The dashboard provides an overview of study activity using interactive charts and statistics. Users can see their total study time for the day, how much time they spent on each subject, and weekly trends that show their overall progress. These charts allow them to hover or click to explore more detailed information about specific subjects or days.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Subject Manager
+StudyFlow includes a subject manager where users can add, edit, reorder, or delete subjects and assign custom colors to them.
 
-## Expanding the ESLint configuration
+### Session History
+A session history page stores all past study sessions in a searchable and filterable table, allowing users to edit notes, adjust session times, or delete entries if needed.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### Productivity Tracking
+After each session, users are prompted to rate their focus on a scale from 1 to 5. These ratings are used to track productivity trends over time. The app also allows users to set daily or weekly study goals and receive notifications when those goals are reached.
+
+### Additional Features
+- Achievement badges
+- Study streak tracking
+- Calendar heatmap that displays daily study activity
+
+## Technology Stack
+
+- **Frontend:** React with functional components and hooks
+- **Routing:** React Router
+- **Data Visualization:** Recharts
+- **Storage:** localStorage for storing user data
+- **Backend:** Firebase (Firestore for data persistence)
+- **Deployment:** GitHub Pages
+
+## Getting Started
+
+TODO

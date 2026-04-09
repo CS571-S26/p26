@@ -52,13 +52,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Dark Mode Support */
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: var(--bg-dark);
-    color: #f3f4f6;
-  }
-}
+/* Dark Mode Support - disabled for now, Bootstrap handles theming */
 
 /* Bootstrap Override - Primary Color */
 .btn-primary {

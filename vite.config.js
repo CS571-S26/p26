@@ -9,10 +9,4 @@ import react from '@vitejs/plugin-react'
 
 export default defineConfig({
   plugins: [react()],
-  base: '/p26/',
-  build: {
-    rollupOptions: {
-      input: './index.html',
-    },
-  },
 })

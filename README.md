@@ -1,3 +1,4 @@
+### Please access this repo through [Link](https://p26-neon.vercel.app)
 # StudyFlow
 
 StudyFlow is a web application designed to help students track and improve their study habits. The app allows users to record study sessions, organize them by subject, and view visual summaries of their productivity. Its goal is to provide a simple and motivating tool that works like a smartphone screen-time dashboard, but specifically for studying.

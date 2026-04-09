@@ -16,9 +16,24 @@ dist-ssr
 .vscode/*
 !.vscode/extensions.json
 .idea
+.claude
 .DS_Store
 *.suo
 *.ntvs*
 *.njsproj
 *.sln
 *.sw?
+design_schema_flow_planning
+CLAUDE.md
+
+# Environment variables (never commit secrets)
+.env
+.env.local
+.env.*.local
+
+# Firebase (if you ever use Firebase CLI or Admin SDK)
+firebase-debug.log
+.firebase/
+serviceAccountKey.json
+*-service-account*.json
+

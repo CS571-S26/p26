@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Container, Card, Form, Table, Button } from 'react-bootstrap';
-import EndSessionModal from '../../../p26/src/components/EndSessionModal';
+import EndSessionModal from '../components/EndSessionModal';
 
 const DEFAULT_SUBJECTS = [
   { id: 1, name: 'Mathematics', color: '#4f46e5', dailyGoal: 2, weeklyGoal: 10, totalTimeSpent: 0 },

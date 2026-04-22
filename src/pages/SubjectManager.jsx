@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import SubjectForm from '../components/SubjectForm';
-import SubjectCard from '../../../p26/src/components/SubjectCard';
-import WeeklyOverviewCard from '../../../p26/src/components/WeeklyOverviewCard';
+import SubjectCard from '../components/SubjectCard';
+import WeeklyOverviewCard from '../components/WeeklyOverviewCard';
 
 const DEFAULT_SUBJECTS = [
   { id: 1, name: 'Mathematics', color: '#4f46e5', dailyGoal: 2, weeklyGoal: 10, totalTimeSpent: 0 },

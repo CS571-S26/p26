@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>StudyFlow Achievements Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "primary": "#2b4bee",
+                        "background-light": "#f6f6f8",
+                        "background-dark": "#101322",
+                    },
+                    fontFamily: {
+                        "display": ["Inter"]
+                    },
+                    borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+                },
+            },
+        }
+    </script>
+</head>
+<body class="bg-background-light dark:bg-background-dark font-display text-slate-900 dark:text-slate-100 min-h-screen">
+<nav class="sticky top-0 z-50 bg-white/80 dark:bg-background-dark/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+<div class="flex justify-between h-16 items-center">
+<div class="flex items-center gap-2">
+<div class="w-8 h-8 bg-primary rounded-lg flex items-center justify-center">
+<span class="material-icons text-white text-xl">auto_stories</span>
+</div>
+<span class="text-xl font-bold tracking-tight text-primary">StudyFlow</span>
+</div>
+<div class="hidden md:flex items-center space-x-8">
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Dashboard</a>
+<a class="text-primary font-semibold" href="#">Achievements</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Courses</a>
+<a class="text-slate-600 dark:text-slate-400 hover:text-primary transition-colors" href="#">Community</a>
+</div>
+<div class="flex items-center gap-4">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold text-slate-900 dark:text-slate-100">Alex Rivers</p>
+<p class="text-xs text-slate-500">Level 24 Scholar</p>
+</div>
+<img class="w-10 h-10 rounded-full border-2 border-primary p-0.5" data-alt="User profile portrait of a young man" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgi7pMCMc2hXjhKqNSwdrPRr3UmFIkM_bep8-EJD_qy-Jb6YSTpsKG0wUgJmkmMbwyxbD_GDoOT9wWV6Z0ixvAGYjI2amXPRhQ6jL3BDFRMPmwowGpGLuLKp_MEu89WYgkfTEDnxVAqn1UEAi6ok5Fi_2lnZHIqsiSgd5of1CcaBquuug2YkYSUnvQ3X0_bTskCqgGdxp7ad3Q0rhWfWZNSwX5DGc9PCAj1M7my7XZuZohcsD0wEqGHjyuowqLgVcEnDIZSB9rs7Q"/>
+</div>
+</div>
+</div>
+</nav>
+<main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+<header class="mb-10">
+<h1 class="text-3xl font-extrabold mb-2">My Journey</h1>
+<p class="text-slate-500 dark:text-slate-400">Track your progress, earn badges, and climb the ranks.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<div class="lg:col-span-2 space-y-8">
+<section class="bg-white dark:bg-slate-900 rounded-xl p-8 border border-slate-200 dark:border-slate-800 relative overflow-hidden">
+<div class="absolute top-0 right-0 p-8 opacity-10">
+<span class="material-icons text-9xl text-primary">local_fire_department</span>
+</div>
+<div class="relative z-10 flex flex-col md:flex-row items-center gap-8">
+<div class="flex flex-col items-center">
+<div class="w-32 h-32 rounded-full border-8 border-primary/20 flex items-center justify-center relative">
+<span class="material-icons text-5xl text-primary">local_fire_department</span>
+<div class="absolute -bottom-2 bg-primary text-white px-4 py-1 rounded-full text-sm font-bold shadow-lg">12 DAYS</div>
+</div>
+</div>
+<div class="flex-1 text-center md:text-left">
+<h2 class="text-2xl font-bold mb-2">Current Study Streak</h2>
+<p class="text-slate-500 dark:text-slate-400 mb-4">You're on fire! Complete today's goal to keep the streak alive. Your personal best is 18 days.</p>
+<div class="flex gap-2 justify-center md:justify-start">
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white text-xs font-bold">M</div>
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white text-xs font-bold">T</div>
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white text-xs font-bold">W</div>
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white text-xs font-bold">T</div>
+<div class="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white text-xs font-bold">F</div>
+<div class="w-8 h-8 rounded-lg bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-400 text-xs font-bold">S</div>
+<div class="w-8 h-8 rounded-lg bg-slate-200 dark:bg-slate-800 flex items-center justify-center text-slate-400 text-xs font-bold">S</div>
+</div>
+</div>
+</div>
+</section>
+<section>
+<div class="flex items-center justify-between mb-6">
+<h2 class="text-xl font-bold">Achievements Gallery</h2>
+<button class="text-sm font-semibold text-primary hover:underline">View All</button>
+</div>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center group cursor-pointer hover:border-primary transition-all">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 text-primary group-hover:scale-110 transition-transform">
+<span class="material-icons text-3xl">emoji_events</span>
+</div>
+<h3 class="font-bold text-sm mb-1">Early Bird</h3>
+<p class="text-xs text-slate-500">Studied before 7 AM</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center group cursor-pointer hover:border-primary transition-all">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 text-primary group-hover:scale-110 transition-transform">
+<span class="material-icons text-3xl">auto_awesome</span>
+</div>
+<h3 class="font-bold text-sm mb-1">Deep Work</h3>
+<p class="text-xs text-slate-500">4h session completed</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center group opacity-50 grayscale hover:grayscale-0 transition-all">
+<div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400 group-hover:text-primary transition-colors">
+<span class="material-icons text-3xl">military_tech</span>
+</div>
+<h3 class="font-bold text-sm mb-1">Mastermind</h3>
+<p class="text-xs text-slate-500">Locked Achievement</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center group opacity-50 grayscale hover:grayscale-0 transition-all">
+<div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400 group-hover:text-primary transition-colors">
+<span class="material-icons text-3xl">psychology</span>
+</div>
+<h3 class="font-bold text-sm mb-1">Perfect Score</h3>
+<p class="text-xs text-slate-500">Locked Achievement</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center group cursor-pointer hover:border-primary transition-all">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 text-primary group-hover:scale-110 transition-transform">
+<span class="material-icons text-3xl">star</span>
+</div>
+<h3 class="font-bold text-sm mb-1">7-Day Hero</h3>
+<p class="text-xs text-slate-500">1 week streak</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center group opacity-50 grayscale hover:grayscale-0 transition-all">
+<div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400 group-hover:text-primary transition-colors">
+<span class="material-icons text-3xl">public</span>
+</div>
+<h3 class="font-bold text-sm mb-1">Global Learner</h3>
+<p class="text-xs text-slate-500">Locked Achievement</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center group cursor-pointer hover:border-primary transition-all">
+<div class="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 text-primary group-hover:scale-110 transition-transform">
+<span class="material-icons text-3xl">groups</span>
+</div>
+<h3 class="font-bold text-sm mb-1">Socialite</h3>
+<p class="text-xs text-slate-500">Joined 5 groups</p>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800 text-center group opacity-50 grayscale hover:grayscale-0 transition-all">
+<div class="w-16 h-16 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center mx-auto mb-4 text-slate-400 group-hover:text-primary transition-colors">
+<span class="material-icons text-3xl">diamond</span>
+</div>
+<h3 class="font-bold text-sm mb-1">Top 1%</h3>
+<p class="text-xs text-slate-500">Locked Achievement</p>
+</div>
+</div>
+</section>
+<section>
+<h2 class="text-xl font-bold mb-6">Milestones</h2>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-blue-500/10 text-blue-500 rounded-lg flex items-center justify-center">
+<span class="material-icons">schedule</span>
+</div>
+<div>
+<p class="font-bold text-sm">Study Hours</p>
+<p class="text-xs text-slate-500">Goal: 500 Hours</p>
+</div>
+</div>
+<p class="text-xs font-bold text-slate-900 dark:text-slate-100">342 / 500</p>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+<div class="bg-blue-500 h-full rounded-full" style="width: 68%;"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-emerald-500/10 text-emerald-500 rounded-lg flex items-center justify-center">
+<span class="material-icons">task_alt</span>
+</div>
+<div>
+<p class="font-bold text-sm">Quizzes Ace</p>
+<p class="text-xs text-slate-500">Goal: 100 Perfects</p>
+</div>
+</div>
+<p class="text-xs font-bold text-slate-900 dark:text-slate-100">89 / 100</p>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+<div class="bg-emerald-500 h-full rounded-full" style="width: 89%;"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-amber-500/10 text-amber-500 rounded-lg flex items-center justify-center">
+<span class="material-icons">auto_stories</span>
+</div>
+<div>
+<p class="font-bold text-sm">Library Master</p>
+<p class="text-xs text-slate-500">Goal: 50 Courses</p>
+</div>
+</div>
+<p class="text-xs font-bold text-slate-900 dark:text-slate-100">12 / 50</p>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+<div class="bg-amber-500 h-full rounded-full" style="width: 24%;"></div>
+</div>
+</div>
+<div class="bg-white dark:bg-slate-900 p-6 rounded-xl border border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-4">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 bg-purple-500/10 text-purple-500 rounded-lg flex items-center justify-center">
+<span class="material-icons">forum</span>
+</div>
+<div>
+<p class="font-bold text-sm">Active Contributor</p>
+<p class="text-xs text-slate-500">Goal: 1k Upvotes</p>
+</div>
+</div>
+<p class="text-xs font-bold text-slate-900 dark:text-slate-100">756 / 1000</p>
+</div>
+<div class="w-full bg-slate-100 dark:bg-slate-800 h-2 rounded-full overflow-hidden">
+<div class="bg-purple-500 h-full rounded-full" style="width: 75%;"></div>
+</div>
+</div>
+</div>
+</section>
+</div>
+<div class="space-y-8">
+<section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 overflow-hidden">
+<div class="p-6 border-b border-slate-200 dark:border-slate-800">
+<div class="flex items-center justify-between mb-4">
+<h2 class="text-lg font-bold">Global Leaderboard</h2>
+<select class="bg-slate-100 dark:bg-slate-800 border-none rounded-lg text-xs font-bold py-1 px-3">
+<option>Weekly</option>
+<option>Monthly</option>
+<option>All Time</option>
+</select>
+</div>
+<div class="flex justify-around items-end pt-8 pb-4">
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full border-2 border-slate-300 dark:border-slate-700 p-0.5 mb-2 relative">
+<img class="w-full h-full rounded-full" data-alt="Female student avatar for leaderboard" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA_UrQs2xFSMHj8qe21dKcDEJmQutAgUmtufswmPkYYjcMaR2fIzgwG1t7mxk__Im4qvbrWu0BcRq8D4iacSe2HfdgMfu-ALUwKLn17tlhDlnCeJ-vQjVgO3nDSrz9uwX86exJBr4WKsD_UAVR4Wdl2Q_RxDgQOQN2bjfHLJltEi09L2dbM-Q4I-RVWL4hUkohx_0w0UvFJ4knV08t75AxTK4mD4U6vryeIsqMeSm6O23HQ9gqp1DMDNeX6tj8Lx6zJRxO6ydUFvXY"/>
+<div class="absolute -bottom-1 -right-1 bg-slate-400 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold">2</div>
+</div>
+<span class="text-xs font-bold">Sarah J.</span>
+<span class="text-[10px] text-slate-500">4,210 pts</span>
+</div>
+<div class="flex flex-col items-center -translate-y-4">
+<div class="w-16 h-16 rounded-full border-4 border-amber-400 p-0.5 mb-2 relative">
+<img class="w-full h-full rounded-full" data-alt="Male student avatar for leaderboard winner" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBzJQxYXbw-OSn6Xl2DZg7Z_lNr_lgST_d3tC-mQpY2b3v9vUCj9yH_zPI5_uLb7Ah3OdhyKxWw2ArpPTL598zKr4OH6GZDndqV7q8D32u6QDIStlEJwbXTdUVOuRtxno-GJz1Fc6DEzK7FgyvI2_smzJh4NnzfKgJEc3M6ShrthbHTnE3rfMumE5XoAw5H9mQHvRGcrtUlWqBQVR_a_B9akCOZRmqM2PYRdPbmR3cjsLOEJBBEXtSglLACwJEJmWPyw_durxUBJNE"/>
+<div class="absolute -top-3 left-1/2 -translate-x-1/2 text-amber-400">
+<span class="material-icons">workspace_premium</span>
+</div>
+<div class="absolute -bottom-1 -right-1 bg-amber-400 text-white w-6 h-6 rounded-full flex items-center justify-center text-[12px] font-bold">1</div>
+</div>
+<span class="text-sm font-bold">Marcus L.</span>
+<span class="text-xs text-primary font-bold">5,890 pts</span>
+</div>
+<div class="flex flex-col items-center">
+<div class="w-12 h-12 rounded-full border-2 border-amber-700/50 p-0.5 mb-2 relative">
+<img class="w-full h-full rounded-full" data-alt="Female student avatar third place" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDlZyUypo-0KNpXfSnnJzuA1TviDihJ-HOJnQjxYDsnAFXD_YLUMOrnDow5CWjr0zvRhHKnNwm3iMHBVkN6aD70OMfChVMZLLQIx886BuIFW6OO3wF0Yjy0D7f3tpuCNXm8NNzU5FEDOstZ7FKs-B4NtnE8CIyewYymCpi64mFEhvEJ1HHewkIoFV0lWGACrqq9CJIkO4MpLq0XHja8fxKOd7yuESK_PJqYcgpVedAzy6qrdnrmREcZDE18HNfgCJxFQMx4TxKvlbQ"/>
+<div class="absolute -bottom-1 -right-1 bg-amber-700 text-white w-5 h-5 rounded-full flex items-center justify-center text-[10px] font-bold">3</div>
+</div>
+<span class="text-xs font-bold">Elena R.</span>
+<span class="text-[10px] text-slate-500">3,950 pts</span>
+</div>
+</div>
+</div>
+<div class="p-2">
+<div class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="text-xs font-bold text-slate-400 w-4 text-center">4</span>
+<img class="w-8 h-8 rounded-full" data-alt="Small profile thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDuXZRiwT9OtXAcJf4OZTKQ7hvZF9Xn61W04EYXhF1OZf1mdihMKh4EaDkhszHbUbRA1HPBCwSOFY7wEObr_XVHmL7kT7PJebNxWUhhIHEXosyXORSEii2-f6Pf71iH1i5dnX1g6Vi_AbiRR1PLkiGmrymXn1vDaTk4Fo2ueJfrEFBM6sI6_XDqhH1m4sFAwtYM7AcaLRfvtrL7IhUDxkxzt6shx5w1M5y4RbqzyATfC-IurRKAiOQVZK6cvgorEnBQ9ElSOEo8GnQ"/>
+<span class="text-sm font-medium flex-1">David K.</span>
+<span class="text-xs font-bold">3,820</span>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg bg-primary/10 border border-primary/20">
+<span class="text-xs font-bold text-primary w-4 text-center">12</span>
+<img class="w-8 h-8 rounded-full border-2 border-primary" data-alt="Current user small thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBvjDwKBAwetwylabruqZYrJ2Y2fO0pLljFWewVBCdy7_CmoDTf3Cu2Gf1fpdzTe1juSfRnXmIyO1Nf75EtixPs9H5B_LcKi2xk7mLBWEdWZKrxT0f0NhG-pJ99XYpAxu3j_HcQH0mzMH3Of7o0upR4WuJBHODxtfaH-SmljgJiPKAlc12yQ81Vc4jG6Pm8zTxa9uyc8JQ7z0WWbd_j21j1rpTyP4nMFUxh4wYA5qWm3D9XcMuWgiMEIGasI4VMB8zRsV18YBfkjhg"/>
+<span class="text-sm font-bold flex-1">Alex Rivers (You)</span>
+<span class="text-xs font-bold text-primary">2,450</span>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="text-xs font-bold text-slate-400 w-4 text-center">13</span>
+<img class="w-8 h-8 rounded-full" data-alt="Small profile thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCELknsA1l5_i4ICvTNULbaxjvJEwyTbraCnWS2KMxkQCcDDNZT_7uh4_MvMgiNf5vgRPsxb7MVY6CiKwx9dEOtAmMCx-BcA1iWEzAuNX2oZh2ajAbFfXH-gUqO8RIIxXd6gmCkdohIxB1Kjd4cZQmcyEGtMigp-7-AssZvSVuhTTZJi2gZolyN4pJSUkXmb9Wgcjup1IBVCdD853Ux9u3oWnR3XjkwOkrh7s8d0RGPmccCo-bAOMA-NvQRbPWAtdvRGFGGeCpFuS0"/>
+<span class="text-sm font-medium flex-1">Maya W.</span>
+<span class="text-xs font-bold">2,410</span>
+</div>
+<div class="flex items-center gap-3 p-3 rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800 transition-colors">
+<span class="text-xs font-bold text-slate-400 w-4 text-center">14</span>
+<img class="w-8 h-8 rounded-full" data-alt="Small profile thumbnail" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRuxRXl-rBAOw8Mj5aF7PuqCmof21TYX3ziyOT9FYV2Bq2PWJSnydzlzsIrEn_nbZE2lWvVmoz8SXA6B6Ip_M6sLhwn7soI3xllEjjkNJtQi4RjBH_iW_sp25vn370hIGdArHuccTIQ7X4369JTlu-P8cNhItSB6cbOKoanEHdGRDcxKzN6uVNZLfV7HyqzqARLxsXigiJLo8NyHWu7cXuMGo_sQJjca3LDB4L4K79AYZXutf-bXyjWFbrHByljViKuAAL1vPsgxc"/>
+<span class="text-sm font-medium flex-1">Chris T.</span>
+<span class="text-xs font-bold">2,380</span>
+</div>
+</div>
+<div class="p-4 border-t border-slate-200 dark:border-slate-800 text-center">
+<button class="text-xs font-bold text-primary hover:underline">Show Full Ranking</button>
+</div>
+</section>
+<section class="bg-gradient-to-br from-primary to-blue-700 rounded-xl p-6 text-white shadow-xl shadow-primary/20">
+<div class="flex items-center gap-4 mb-4">
+<div class="w-12 h-12 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
+<span class="material-icons">rocket_launch</span>
+</div>
+<div>
+<h3 class="font-bold">Next Boost</h3>
+<p class="text-xs text-blue-100">Reach 3,000 pts to unlock</p>
+</div>
+</div>
+<p class="text-sm text-blue-50 mb-4 leading-relaxed">Unlock the "Turbo Mode" widget for your study sessions once you reach the next tier!</p>
+<div class="w-full bg-white/20 h-2 rounded-full mb-4">
+<div class="bg-white h-full rounded-full" style="width: 75%;"></div>
+</div>
+<button class="w-full bg-white text-primary font-bold py-2 rounded-lg text-sm transition-transform active:scale-95">Complete Missions</button>
+</section>
+<section class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200 dark:border-slate-800 p-6">
+<h3 class="font-bold mb-4">Recent Activity</h3>
+<div class="space-y-4">
+<div class="flex items-start gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-emerald-500 mt-2"></div>
+<div>
+<p class="text-xs font-medium">Earned 50 XP in <span class="text-primary">Advanced Calculus</span></p>
+<p class="text-[10px] text-slate-500">2 hours ago</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+<div>
+<p class="text-xs font-medium">Unlocked <span class="text-primary">7-Day Hero</span> badge</p>
+<p class="text-[10px] text-slate-500">Yesterday</p>
+</div>
+</div>
+<div class="flex items-start gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-amber-500 mt-2"></div>
+<div>
+<p class="text-xs font-medium">Maintained streak for 12 days</p>
+<p class="text-[10px] text-slate-500">Yesterday</p>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</main>
+<footer class="mt-20 py-12 border-t border-slate-200 dark:border-slate-800">
+<div class="max-w-7xl mx-auto px-4 text-center">
+<div class="flex justify-center gap-2 mb-6">
+<div class="w-8 h-8 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+<span class="material-icons text-xl">auto_stories</span>
+</div>
+<span class="text-xl font-bold text-slate-400">StudyFlow</span>
+</div>
+<p class="text-slate-500 text-sm">Empowering learners through gamified experiences.</p>
+<div class="flex justify-center gap-6 mt-6">
+<a class="text-slate-400 hover:text-primary" href="#"><span class="material-icons">facebook</span></a>
+<a class="text-slate-400 hover:text-primary" href="#"><span class="material-icons">alternate_email</span></a>
+<a class="text-slate-400 hover:text-primary" href="#"><span class="material-icons">share</span></a>
+</div>
+<p class="text-slate-500 text-[10px] mt-8">© 2024 StudyFlow Gamification Engine. All rights reserved.</p>
+</div>
+</footer>
+</body></html>

@@ -23,7 +23,6 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
-design_schema_flow_planning
 CLAUDE.md
 
 # Environment variables (never commit secrets)

@@ -1,53 +1,100 @@
-import { Container, Row, Col, Card, Button, ListGroup, Badge } from 'react-bootstrap';
+import { useState, useEffect } from 'react';
+import { Container, Row, Col, Button } from 'react-bootstrap';
+import SubjectForm from '../components/SubjectForm';
+import SubjectCard from '../../../p26/src/components/SubjectCard';
+import WeeklyOverviewCard from '../../../p26/src/components/WeeklyOverviewCard';
 
-const mockSubjects = [
-  { id: 1, name: 'Mathematics', color: '#4f46e5', totalTimeSpent: 120 },
-  { id: 2, name: 'Computer Science', color: '#10b981', totalTimeSpent: 90 },
-  { id: 3, name: 'Economics', color: '#f59e0b', totalTimeSpent: 60 },
+const DEFAULT_SUBJECTS = [
+  { id: 1, name: 'Mathematics', color: '#4f46e5', dailyGoal: 2, weeklyGoal: 10, totalTimeSpent: 0 },
+  { id: 2, name: 'Computer Science', color: '#10b981', dailyGoal: 2, weeklyGoal: 15, totalTimeSpent: 0 },
+  { id: 3, name: 'Economics', color: '#f59e0b', dailyGoal: 1, weeklyGoal: 8, totalTimeSpent: 0 },
 ];
 
 export default function SubjectManager() {
+  const [subjects, setSubjects] = useState(() => {
+    const saved = localStorage.getItem('studyflow-subjects');
+    return saved ? JSON.parse(saved) : DEFAULT_SUBJECTS;
+  });
+
+  const [sessions] = useState(() => {
+    const saved = localStorage.getItem('studyflow-sessions');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  // Capture "now" once on mount so render stays pure
+  const [now] = useState(() => Date.now());
+
+  const [showForm, setShowForm] = useState(true);
+
+  useEffect(() => {
+    localStorage.setItem('studyflow-subjects', JSON.stringify(subjects));
+  }, [subjects]);
+
+  // Compute this week's minutes per subject (last 7 days)
+  const weekAgo = now - 7 * 24 * 60 * 60 * 1000;
+  const weeklyMinutesBySubject = {};
+  sessions.forEach(s => {
+    const sessionTime = new Date(s.date).getTime();
+    if (sessionTime >= weekAgo) {
+      weeklyMinutesBySubject[s.subjectId] =
+        (weeklyMinutesBySubject[s.subjectId] || 0) + s.duration;
+    }
+  });
+
+  function handleAdd(newSubject) {
+    setSubjects(prev => [...prev, newSubject]);
+  }
+
+  function handleDelete(id) {
+    setSubjects(prev => prev.filter(s => s.id !== id));
+  }
+
   return (
-    <Container className="py-4">
-      <Row className="mb-4 align-items-center">
-        <Col>
-          <h1>Subjects</h1>
-          <p className="text-muted">Manage your study subjects</p>
-        </Col>
-        <Col xs="auto">
-          <Button variant="primary">+ Add Subject</Button>
-        </Col>
-      </Row>
+    <Container fluid className="sf-page">
+      <div className="d-flex flex-wrap justify-content-between align-items-start mb-4 gap-2">
+        <div>
+          <h1 className="mb-1">Subjects</h1>
+          <p className="text-muted mb-0">
+            Track your learning progress and study targets.
+          </p>
+        </div>
+        <Button
+          variant="primary"
+          onClick={() => setShowForm(prev => !prev)}
+        >
+          {showForm ? '× Close' : '+ Add New Subject'}
+        </Button>
+      </div>
 
       <Row className="g-4">
-        <Col md={7}>
-          <Card>
-            <Card.Header>Your Subjects</Card.Header>
-            <ListGroup variant="flush">
-              {mockSubjects.map(subject => (
-                <ListGroup.Item key={subject.id} className="d-flex justify-content-between align-items-center">
-                  <div className="d-flex align-items-center gap-2">
-                    <span style={{ width: 14, height: 14, borderRadius: '50%', background: subject.color, display: 'inline-block' }} />
-                    {subject.name}
-                  </div>
-                  <div className="d-flex align-items-center gap-2">
-                    <Badge bg="secondary">{subject.totalTimeSpent} min</Badge>
-                    <Button size="sm" variant="outline-secondary">Edit</Button>
-                    <Button size="sm" variant="outline-danger">Delete</Button>
-                  </div>
-                </ListGroup.Item>
-              ))}
-            </ListGroup>
-          </Card>
-        </Col>
+        {showForm && (
+          <Col lg={4}>
+            <SubjectForm onAdd={handleAdd} />
+          </Col>
+        )}
 
-        <Col md={5}>
-          <Card>
-            <Card.Header>Add Subject</Card.Header>
-            <Card.Body>
-              <p className="text-muted">Subject form coming soon.</p>
-            </Card.Body>
-          </Card>
+        <Col lg={showForm ? 8 : 12}>
+          {subjects.length === 0 ? (
+            <div className="text-center text-muted py-5">
+              No subjects yet — add one on the left!
+            </div>
+          ) : (
+            subjects.map(subject => (
+              <SubjectCard
+                key={subject.id}
+                subject={subject}
+                weeklyMinutes={weeklyMinutesBySubject[subject.id] || 0}
+                onDelete={handleDelete}
+              />
+            ))
+          )}
+
+          {subjects.length > 0 && (
+            <WeeklyOverviewCard
+              subjects={subjects}
+              weeklyMinutesBySubject={weeklyMinutesBySubject}
+            />
+          )}
         </Col>
       </Row>
     </Container>

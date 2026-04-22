@@ -1,13 +1,13 @@
 import { Outlet } from 'react-router-dom';
-import NavBar from './NavBar';
+import Sidebar from './Sidebar';
 
 export default function Layout() {
   return (
-    <>
-      <NavBar />
-      <main className="container py-4">
+    <div className="sf-app">
+      <Sidebar />
+      <main className="sf-main">
         <Outlet />
       </main>
-    </>
+    </div>
   );
 }

@@ -3,36 +3,36 @@
   --primary: #2b4bee;
   --primary-light: #4d5fee;
   --primary-dark: #1f2d9f;
-  
+
   /* Background Colors */
   --bg-light: #f6f6f8;
   --bg-dark: #101322;
   --bg-white: #ffffff;
-  
+
   /* Neutral Colors */
   --text-dark: #1a1a1a;
   --text-light: #6b7280;
   --border-color: #e5e7eb;
-  
+
   /* Status Colors */
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
   --info: #3b82f6;
-  
+
   /* Spacing */
   --spacing-xs: 0.25rem;
   --spacing-sm: 0.5rem;
   --spacing-md: 1rem;
   --spacing-lg: 1.5rem;
   --spacing-xl: 2rem;
-  
+
   /* Border Radius */
   --radius-sm: 0.25rem;
   --radius-md: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-full: 9999px;
-  
+
   /* Font Sizes */
   --font-xs: 0.75rem;
   --font-sm: 0.875rem;
@@ -41,7 +41,6 @@
   --font-xl: 1.25rem;
 }
 
-/* Light Mode (Default) */
 body {
   background-color: var(--bg-light);
   color: var(--text-dark);
@@ -52,9 +51,263 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Dark Mode Support - disabled for now, Bootstrap handles theming */
+/* ==========================================================================
+   App Shell (sidebar + main content)
+   ========================================================================== */
 
-/* Bootstrap Override - Primary Color */
+.sf-app {
+  display: flex;
+  min-height: 100vh;
+}
+
+.sf-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  background: var(--bg-white);
+  border-right: 1px solid var(--border-color);
+  padding: 1.5rem 1rem;
+  display: flex;
+  flex-direction: column;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+}
+
+.sf-main {
+  flex: 1;
+  min-width: 0;
+  padding: 0;
+}
+
+.sf-page {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+}
+
+@media (max-width: 767px) {
+  .sf-app { flex-direction: column; }
+  .sf-sidebar {
+    width: 100%;
+    height: auto;
+    position: static;
+    border-right: 0;
+    border-bottom: 1px solid var(--border-color);
+    padding: 1rem;
+  }
+  .sf-page { padding: 1.5rem 1rem; }
+}
+
+/* ==========================================================================
+   Sidebar Internals
+   ========================================================================== */
+
+.sf-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+  padding: 0 0.5rem;
+}
+
+.sf-brand-icon {
+  width: 40px;
+  height: 40px;
+  background: var(--primary);
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: white;
+}
+
+.sf-brand-name {
+  font-weight: 700;
+  font-size: 1rem;
+  line-height: 1.1;
+}
+
+.sf-brand-sub {
+  color: var(--text-light);
+  font-size: 0.75rem;
+}
+
+.sf-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  flex: 1;
+}
+
+.sf-navlink {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.625rem 0.875rem;
+  border-radius: 8px;
+  color: var(--text-dark);
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  transition: background 0.15s ease, color 0.15s ease;
+}
+
+.sf-navlink:hover {
+  background: rgba(43, 74, 238, 0.06);
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.sf-navlink-active {
+  background: rgba(43, 74, 238, 0.1);
+  color: var(--primary);
+  font-weight: 600;
+}
+
+.sf-navlink-icon {
+  font-size: 1rem;
+  width: 20px;
+  text-align: center;
+}
+
+.sf-sidebar-footer {
+  margin-top: auto;
+  padding-top: 1rem;
+}
+
+.sf-storage-card {
+  background: var(--bg-light);
+  border-radius: 10px;
+  padding: 0.75rem;
+}
+
+.sf-storage-label {
+  font-size: 0.7rem;
+  color: var(--primary);
+  letter-spacing: 0.5px;
+  font-weight: 600;
+}
+
+.sf-storage-sub {
+  font-size: 0.7rem;
+  color: var(--text-light);
+}
+
+/* ==========================================================================
+   Timer
+   ========================================================================== */
+
+.sf-timer-display {
+  font-size: 4rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -2px;
+  font-variant-numeric: tabular-nums;
+}
+
+.sf-pill {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: rgba(43, 74, 238, 0.08);
+  color: var(--primary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  border-radius: 999px;
+}
+
+/* ==========================================================================
+   Stats Cards
+   ========================================================================== */
+
+.sf-stats-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.sf-stats-value {
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1;
+}
+
+/* ==========================================================================
+   Subject Icons
+   ========================================================================== */
+
+.sf-subject-icon {
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.sf-subject-icon-lg {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  font-size: 1.2rem;
+}
+
+/* ==========================================================================
+   Subject Form Color Picker
+   ========================================================================== */
+
+.sf-color-dot {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  border: 2px solid var(--bg-white);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.1s ease;
+}
+
+.sf-color-dot:hover {
+  transform: scale(1.1);
+}
+
+/* ==========================================================================
+   Weekly Overview Card
+   ========================================================================== */
+
+.sf-overview-card {
+  background: rgba(43, 74, 238, 0.05) !important;
+  border-color: rgba(43, 74, 238, 0.2) !important;
+}
+
+.sf-overview-dot {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: 3px solid white;
+}
+
+.sf-overview-dot-more {
+  background: var(--bg-light);
+  color: var(--text-light);
+  font-size: 0.7rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ==========================================================================
+   Bootstrap overrides
+   ========================================================================== */
+
 .btn-primary {
   background-color: var(--primary);
   border-color: var(--primary);
@@ -72,7 +325,6 @@ body {
   box-shadow: 0 0 0 0.25rem rgba(43, 74, 238, 0.25);
 }
 
-/* Link Colors */
 a {
   color: var(--primary);
   text-decoration: none;
@@ -83,24 +335,25 @@ a:hover {
   text-decoration: underline;
 }
 
-/* Form Inputs */
-.form-control:focus {
+.form-control:focus,
+.form-select:focus {
   border-color: var(--primary);
-  box-shadow: 0 0 0 0.2rem rgba(43, 74, 238, 0.25);
+  box-shadow: 0 0 0 0.2rem rgba(43, 74, 238, 0.15);
 }
 
-/* Cards */
 .card {
   border: 1px solid var(--border-color);
   border-radius: var(--radius-lg);
-  transition: box-shadow 0.2s ease;
+  background: var(--bg-white);
 }
 
-.card:hover {
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+.card-header {
+  background: var(--bg-white);
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 600;
 }
 
-/* Accessibility - Skip Link */
+/* Skip link for accessibility */
 .skip-link {
   position: absolute;
   top: -40px;
@@ -117,16 +370,7 @@ a:hover {
   top: 0;
 }
 
-/* Focus Styles */
 *:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 2px;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  :root {
-    --spacing-md: 0.75rem;
-    --spacing-lg: 1rem;
-  }
 }

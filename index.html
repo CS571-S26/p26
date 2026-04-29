@@ -5,28 +5,6 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>StudyFlow - Track Your Study Sessions</title>
-    <script>
-      // Decode the GitHub Pages 404 redirect (?p=/path&q=query) back into a real URL
-      (function () {
-        var l = window.location;
-        if (l.search.indexOf('?p=/') === 0 || l.search.indexOf('&p=/') !== -1) {
-          var query = l.search.slice(1).split('&').reduce(function (acc, kv) {
-            var eq = kv.indexOf('=');
-            if (eq < 0) return acc;
-            acc[kv.slice(0, eq)] = kv.slice(eq + 1);
-            return acc;
-          }, {});
-          if (query.p) {
-            window.history.replaceState(
-              null, null,
-              l.pathname.replace(/\/$/, '') + (query.p || '').replace(/~and~/g, '&') +
-              (query.q ? '?' + query.q.replace(/~and~/g, '&') : '') +
-              l.hash
-            );
-          }
-        }
-      })();
-    </script>
   </head>
   <body>
     <a class="skip-link" href="#main-content">Skip to main content</a>

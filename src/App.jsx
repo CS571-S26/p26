@@ -6,11 +6,9 @@ import SubjectManager from './pages/SubjectManager';
 import Statistics from './pages/Statistics';
 import NotFound from './pages/NotFound';
 
-const BASENAME = import.meta.env.BASE_URL.replace(/\/$/, '');
-
 export default function App() {
   return (
-    <BrowserRouter basename={BASENAME}>
+    <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<Dashboard />} />

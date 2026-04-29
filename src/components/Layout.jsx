@@ -16,6 +16,7 @@ export default function Layout() {
         <EndSessionModal
           show={true}
           minutes={pendingSession.minutes}
+          seconds={pendingSession.seconds}
           onSave={saveSession}
           onDiscard={discardSession}
         />

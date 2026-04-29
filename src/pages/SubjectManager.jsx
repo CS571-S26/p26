@@ -16,7 +16,7 @@ export default function SubjectManager() {
     return saved ? JSON.parse(saved) : DEFAULT_SUBJECTS;
   });
 
-  const [sessions] = useState(() => {
+  const [sessions, setSessions] = useState(() => {
     const saved = localStorage.getItem('studyflow-sessions');
     return saved ? JSON.parse(saved) : [];
   });
@@ -30,6 +30,28 @@ export default function SubjectManager() {
     localStorage.setItem('studyflow-subjects', JSON.stringify(subjects));
   }, [subjects]);
 
+  function getSessionMinutes(session) {
+    if (typeof session.durationSeconds === 'number') return session.durationSeconds / 60;
+    if (typeof session.duration === 'number') return session.duration;
+    return 0;
+  }
+
+  useEffect(() => {
+    function refreshFromStorage() {
+      const savedSessions = localStorage.getItem('studyflow-sessions');
+      const savedSubjects = localStorage.getItem('studyflow-subjects');
+      setSessions(savedSessions ? JSON.parse(savedSessions) : []);
+      setSubjects(savedSubjects ? JSON.parse(savedSubjects) : DEFAULT_SUBJECTS);
+    }
+
+    window.addEventListener('studyflow:data-changed', refreshFromStorage);
+    window.addEventListener('storage', refreshFromStorage);
+    return () => {
+      window.removeEventListener('studyflow:data-changed', refreshFromStorage);
+      window.removeEventListener('storage', refreshFromStorage);
+    };
+  }, []);
+
   // Compute this week's minutes per subject (last 7 days)
   const weekAgo = now - 7 * 24 * 60 * 60 * 1000;
   const weeklyMinutesBySubject = {};
@@ -37,7 +59,7 @@ export default function SubjectManager() {
     const sessionTime = new Date(s.date).getTime();
     if (sessionTime >= weekAgo) {
       weeklyMinutesBySubject[s.subjectId] =
-        (weeklyMinutesBySubject[s.subjectId] || 0) + s.duration;
+        (weeklyMinutesBySubject[s.subjectId] || 0) + getSessionMinutes(s);
     }
   });
 

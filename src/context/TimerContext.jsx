@@ -195,6 +195,7 @@ export function TimerProvider({ children }) {
     }
     setPendingSession({
       minutes,
+      seconds: elapsedSeconds,
       subjectId: subject.id,
       subjectName: subject.name,
       subjectColor: subject.color,
@@ -213,7 +214,8 @@ export function TimerProvider({ children }) {
       subjectId: pendingSession.subjectId,
       subjectName: pendingSession.subjectName,
       subjectColor: pendingSession.subjectColor,
-      duration: pendingSession.minutes,
+      duration: Math.max(1, Math.ceil(pendingSession.seconds / 60)),
+      durationSeconds: pendingSession.seconds,
       focusRating: details.focusRating,
       notes: details.notes,
       date: new Date().toISOString().slice(0, 10),

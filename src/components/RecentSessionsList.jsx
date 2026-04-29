@@ -1,10 +1,19 @@
 import { Card } from 'react-bootstrap';
 
-function formatDuration(minutes) {
-  const h = Math.floor(minutes / 60);
-  const m = minutes % 60;
-  if (h > 0) return `${h}h ${m}m`;
-  return `${m}m`;
+function getSessionSeconds(session) {
+  if (typeof session.durationSeconds === 'number') return session.durationSeconds;
+  if (typeof session.duration === 'number') return session.duration * 60;
+  return 0;
+}
+
+function formatDuration(seconds) {
+  const total = Math.max(0, Math.floor(seconds));
+  if (total < 60) return `${total}s`;
+  const h = Math.floor(total / 3600);
+  const m = Math.floor((total % 3600) / 60);
+  const s = total % 60;
+  if (h > 0) return s > 0 ? `${h}h ${m}m ${s}s` : `${h}h ${m}m`;
+  return s > 0 ? `${m}m ${s}s` : `${m}m`;
 }
 
 export default function RecentSessionsList(props) {
@@ -45,7 +54,7 @@ export default function RecentSessionsList(props) {
                   </div>
                 </div>
                 <div className="text-end">
-                  <div className="fw-semibold">{formatDuration(s.duration)}</div>
+                  <div className="fw-semibold">{formatDuration(getSessionSeconds(s))}</div>
                   <small className="text-muted">Focus: {s.focusRating}/5</small>
                 </div>
               </div>

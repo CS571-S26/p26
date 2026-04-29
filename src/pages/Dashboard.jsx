@@ -40,10 +40,32 @@ export default function Dashboard() {
     localStorage.setItem('studyflow-subjects', JSON.stringify(subjects));
   }, [subjects]);
 
+  function getSessionMinutes(session) {
+    if (typeof session.durationSeconds === 'number') return session.durationSeconds / 60;
+    if (typeof session.duration === 'number') return session.duration;
+    return 0;
+  }
+
+  useEffect(() => {
+    function refreshFromStorage() {
+      const savedSessions = localStorage.getItem('studyflow-sessions');
+      const savedSubjects = localStorage.getItem('studyflow-subjects');
+      if (savedSessions) setSessions(JSON.parse(savedSessions));
+      if (savedSubjects) setSubjects(JSON.parse(savedSubjects));
+    }
+
+    window.addEventListener('studyflow:data-changed', refreshFromStorage);
+    window.addEventListener('storage', refreshFromStorage);
+    return () => {
+      window.removeEventListener('studyflow:data-changed', refreshFromStorage);
+      window.removeEventListener('storage', refreshFromStorage);
+    };
+  }, []);
+
   // --- Compute dashboard stats ---
   const today = new Date(now).toISOString().slice(0, 10);
   const todaysSessions = sessions.filter(s => s.date === today);
-  const todaysMinutes = todaysSessions.reduce((acc, s) => acc + s.duration, 0);
+  const todaysMinutes = todaysSessions.reduce((acc, s) => acc + getSessionMinutes(s), 0);
   const todaysHours = (todaysMinutes / 60).toFixed(1);
 
   // Yesterday comparison
@@ -52,7 +74,7 @@ export default function Dashboard() {
     .slice(0, 10);
   const yesterdaysMinutes = sessions
     .filter(s => s.date === yesterday)
-    .reduce((acc, s) => acc + s.duration, 0);
+    .reduce((acc, s) => acc + getSessionMinutes(s), 0);
   let focusChangeText = 'No data yesterday';
   let focusChangeColor = 'var(--muted-strong)';
   if (yesterdaysMinutes > 0) {
@@ -90,7 +112,7 @@ export default function Dashboard() {
     const dateStr = d.toISOString().slice(0, 10);
     const mins = sessions
       .filter(s => s.date === dateStr)
-      .reduce((acc, s) => acc + s.duration, 0);
+      .reduce((acc, s) => acc + getSessionMinutes(s), 0);
     weeklyData.push({ date: dateStr, label: DAY_LABELS[d.getDay()], minutes: mins });
   }
 
@@ -115,7 +137,8 @@ export default function Dashboard() {
       subjectId: pendingSession.subjectId,
       subjectName: pendingSession.subjectName,
       subjectColor: pendingSession.subjectColor,
-      duration: pendingSession.minutes,
+      duration: Math.max(1, Math.ceil(pendingSession.seconds / 60)),
+      durationSeconds: pendingSession.seconds,
       focusRating: details.focusRating,
       notes: details.notes,
       date: new Date().toISOString().slice(0, 10),

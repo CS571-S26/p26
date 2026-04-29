@@ -8,6 +8,23 @@ const DEFAULT_SUBJECTS = [
   { id: 3, name: 'Economics', color: '#f59e0b', dailyGoal: 1, weeklyGoal: 8, totalTimeSpent: 0 },
 ];
 
+function getSessionSeconds(session) {
+  if (typeof session.durationSeconds === 'number') return session.durationSeconds;
+  if (typeof session.duration === 'number') return session.duration * 60;
+  return 0;
+}
+
+function formatDuration(seconds) {
+  const total = Math.max(0, Math.floor(seconds));
+  if (total < 60) return `${total} sec`;
+  const m = Math.floor(total / 60);
+  const s = total % 60;
+  const minLabel = m === 1 ? 'min' : 'min';
+  if (s === 0) return `${m} ${minLabel}`;
+  const secLabel = s === 1 ? 'sec' : 'sec';
+  return `${m} ${minLabel} ${s} ${secLabel}`;
+}
+
 function Stars(props) {
   const n = props.rating || 0;
   return (
@@ -42,6 +59,20 @@ export default function Sessions() {
   useEffect(() => {
     localStorage.setItem('studyflow-sessions', JSON.stringify(sessions));
   }, [sessions]);
+
+  useEffect(() => {
+    function refreshFromStorage() {
+      const saved = localStorage.getItem('studyflow-sessions');
+      setSessions(saved ? JSON.parse(saved) : []);
+    }
+
+    window.addEventListener('studyflow:data-changed', refreshFromStorage);
+    window.addEventListener('storage', refreshFromStorage);
+    return () => {
+      window.removeEventListener('studyflow:data-changed', refreshFromStorage);
+      window.removeEventListener('storage', refreshFromStorage);
+    };
+  }, []);
 
   function handleDelete(id) {
     if (window.confirm('Delete this session?')) {
@@ -132,7 +163,7 @@ export default function Sessions() {
                         {s.subjectName}
                       </span>
                     </td>
-                    <td>{s.duration} min</td>
+                    <td>{formatDuration(getSessionSeconds(s))}</td>
                     <td><Stars rating={s.focusRating} /></td>
                     <td style={{ maxWidth: 280 }}>
                       {s.notes ? (
@@ -175,7 +206,7 @@ export default function Sessions() {
         <EndSessionModal
           show={true}
           title="Edit Session"
-          minutes={editing.duration}
+          seconds={getSessionSeconds(editing)}
           initialRating={editing.focusRating}
           initialNotes={editing.notes}
           saveLabel="Save Changes"

@@ -5,6 +5,30 @@ export default function EndSessionModal(props) {
   const [rating, setRating] = useState(props.initialRating || 4);
   const [notes, setNotes] = useState(props.initialNotes || '');
 
+  function formatDurationText() {
+    if (typeof props.seconds === 'number') {
+      const total = Math.max(0, Math.floor(props.seconds));
+      if (total < 60) {
+        const label = total === 1 ? 'second' : 'seconds';
+        return `${total} ${label}`;
+      }
+      const minutes = Math.floor(total / 60);
+      const seconds = total % 60;
+      const minLabel = minutes === 1 ? 'minute' : 'minutes';
+      if (seconds === 0) return `${minutes} ${minLabel}`;
+      const secLabel = seconds === 1 ? 'second' : 'seconds';
+      return `${minutes} ${minLabel} ${seconds} ${secLabel}`;
+    }
+
+    if (typeof props.minutes === 'number') {
+      const mins = Math.max(0, Math.floor(props.minutes));
+      const label = mins === 1 ? 'minute' : 'minutes';
+      return `${mins} ${label}`;
+    }
+
+    return null;
+  }
+
   function handleSubmit(e) {
     e.preventDefault();
     props.onSave({ focusRating: rating, notes: notes.trim() });
@@ -17,9 +41,9 @@ export default function EndSessionModal(props) {
           <Modal.Title>{props.title || 'Session Complete'}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          {props.minutes !== undefined && (
+          {formatDurationText() && (
             <p className="text-muted mb-3">
-              You studied for <strong>{props.minutes} minutes</strong>. How was your focus?
+              You studied for <strong>{formatDurationText()}</strong>. How was your focus?
             </p>
           )}
 

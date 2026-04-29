@@ -1,22 +1,43 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
 
 export default function Statistics() {
-  const [subjects] = useState(() => {
+    function getSessionMinutes(session) {
+      if (typeof session.durationSeconds === 'number') return session.durationSeconds / 60;
+      if (typeof session.duration === 'number') return session.duration;
+      return 0;
+    }
+  const [subjects, setSubjects] = useState(() => {
     const saved = localStorage.getItem('studyflow-subjects');
     return saved ? JSON.parse(saved) : [];
   });
 
-  const [sessions] = useState(() => {
+  const [sessions, setSessions] = useState(() => {
     const saved = localStorage.getItem('studyflow-sessions');
     return saved ? JSON.parse(saved) : [];
   });
+
+  useEffect(() => {
+    function refreshFromStorage() {
+      const savedSessions = localStorage.getItem('studyflow-sessions');
+      const savedSubjects = localStorage.getItem('studyflow-subjects');
+      setSessions(savedSessions ? JSON.parse(savedSessions) : []);
+      setSubjects(savedSubjects ? JSON.parse(savedSubjects) : []);
+    }
+
+    window.addEventListener('studyflow:data-changed', refreshFromStorage);
+    window.addEventListener('storage', refreshFromStorage);
+    return () => {
+      window.removeEventListener('studyflow:data-changed', refreshFromStorage);
+      window.removeEventListener('storage', refreshFromStorage);
+    };
+  }, []);
 
   // Breakdown by subject
   const breakdown = subjects
     .map(s => {
       const subjSessions = sessions.filter(sess => sess.subjectId === s.id);
-      const minutes = subjSessions.reduce((acc, sess) => acc + sess.duration, 0);
+      const minutes = subjSessions.reduce((acc, sess) => acc + getSessionMinutes(sess), 0);
       const avgFocus =
         subjSessions.length > 0
           ? (

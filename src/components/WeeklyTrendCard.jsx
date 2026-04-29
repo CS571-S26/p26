@@ -23,13 +23,17 @@ export default function WeeklyTrendCard(props) {
     <Card className="h-100">
       <Card.Body>
         <div className="d-flex justify-content-between align-items-center mb-3">
-          <h5 className="mb-0">Weekly Trend</h5>
+          <h2 className="h5 mb-0">Weekly Trend</h2>
         </div>
 
         <svg
           viewBox={`0 0 ${chartWidth} ${chartHeight + 20}`}
           width="100%"
           style={{ maxHeight: 140 }}
+          role="img"
+          aria-label={`Bar chart of study minutes per day for the last 7 days. ${days
+            .map(d => `${d.label}: ${d.minutes} minutes`)
+            .join(', ')}.`}
         >
           {days.map((d, i) => {
             const h =
@@ -45,14 +49,14 @@ export default function WeeklyTrendCard(props) {
                   height={h}
                   fill="var(--primary)"
                   rx={3}
-                  opacity={d.minutes > 0 ? 1 : 0.2}
+                  opacity={d.minutes > 0 ? 1 : 0.3}
                 />
                 <text
                   x={x + barWidth / 2}
                   y={chartHeight + 15}
                   textAnchor="middle"
                   fontSize="9"
-                  fill="#9ca3af"
+                  fill="var(--muted-strong)"
                   fontWeight="600"
                 >
                   {d.label}

@@ -11,14 +11,14 @@ export default function Sidebar() {
   return (
     <aside className="sf-sidebar">
       <div className="sf-brand">
-        <div className="sf-brand-icon">📖</div>
+        <div className="sf-brand-icon" aria-hidden="true">📖</div>
         <div>
           <div className="sf-brand-name">StudyFlow</div>
           <div className="sf-brand-sub">Deep Work Engine</div>
         </div>
       </div>
 
-      <nav className="sf-nav">
+      <nav className="sf-nav" aria-label="Primary">
         {NAV_ITEMS.map(item => (
           <NavLink
             key={item.to}
@@ -28,7 +28,7 @@ export default function Sidebar() {
               isActive ? 'sf-navlink sf-navlink-active' : 'sf-navlink'
             }
           >
-            <span className="sf-navlink-icon">{item.icon}</span>
+            <span className="sf-navlink-icon" aria-hidden="true">{item.icon}</span>
             <span>{item.label}</span>
           </NavLink>
         ))}

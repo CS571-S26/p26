@@ -9,6 +9,7 @@ export default function StatsCard(props) {
           <div
             className="sf-stats-icon"
             style={{ background: props.iconBg || 'rgba(43, 74, 238, 0.1)' }}
+            aria-hidden="true"
           >
             <span style={{ fontSize: '1.1rem' }}>{props.icon}</span>
           </div>
@@ -22,7 +23,7 @@ export default function StatsCard(props) {
         {props.subtitle && (
           <div
             className="small"
-            style={{ color: props.subtitleColor || 'var(--text-light)' }}
+            style={{ color: props.subtitleColor || 'var(--muted-strong)' }}
           >
             {props.subtitle}
           </div>

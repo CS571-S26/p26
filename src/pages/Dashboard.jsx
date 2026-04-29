@@ -54,13 +54,13 @@ export default function Dashboard() {
     .filter(s => s.date === yesterday)
     .reduce((acc, s) => acc + s.duration, 0);
   let focusChangeText = 'No data yesterday';
-  let focusChangeColor = 'var(--text-light)';
+  let focusChangeColor = 'var(--muted-strong)';
   if (yesterdaysMinutes > 0) {
     const diff = Math.round(
       ((todaysMinutes - yesterdaysMinutes) / yesterdaysMinutes) * 100
     );
     focusChangeText = `${diff >= 0 ? '+' : ''}${diff}% vs yesterday`;
-    focusChangeColor = diff >= 0 ? '#10b981' : '#ef4444';
+    focusChangeColor = diff >= 0 ? 'var(--success-text)' : 'var(--danger-text)';
   }
 
   // Streak: consecutive days ending today (or yesterday if no session today)

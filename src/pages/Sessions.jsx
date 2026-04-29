@@ -11,9 +11,16 @@ const DEFAULT_SUBJECTS = [
 function Stars(props) {
   const n = props.rating || 0;
   return (
-    <span style={{ fontSize: 14, whiteSpace: 'nowrap' }}>
-      <span style={{ color: '#f59e0b' }}>{'★'.repeat(n)}</span>
-      <span style={{ color: '#e5e7eb' }}>{'★'.repeat(5 - n)}</span>
+    <span
+      style={{ fontSize: 14, whiteSpace: 'nowrap' }}
+      aria-label={`Focus rating: ${n} of 5`}
+    >
+      <span aria-hidden="true" style={{ color: 'var(--warning-text)' }}>
+        {'★'.repeat(n)}
+      </span>
+      <span aria-hidden="true" style={{ color: '#9ca3af' }}>
+        {'★'.repeat(5 - n)}
+      </span>
     </span>
   );
 }
@@ -69,18 +76,21 @@ export default function Sessions() {
 
       <Card>
         <Card.Header className="d-flex justify-content-between align-items-center flex-wrap gap-2">
-          <span className="fw-semibold">Session History</span>
-          <Form.Select
-            size="sm"
-            style={{ width: 220 }}
-            value={filterSubject}
-            onChange={e => setFilterSubject(e.target.value)}
-          >
-            <option value="all">All Subjects</option>
-            {subjects.map(s => (
-              <option key={s.id} value={s.id}>{s.name}</option>
-            ))}
-          </Form.Select>
+          <h2 className="h6 mb-0 fw-semibold">Session History</h2>
+          <Form.Group controlId="session-filter" className="d-flex align-items-center gap-2 mb-0">
+            <Form.Label className="mb-0 small text-muted">Filter:</Form.Label>
+            <Form.Select
+              size="sm"
+              style={{ width: 220 }}
+              value={filterSubject}
+              onChange={e => setFilterSubject(e.target.value)}
+            >
+              <option value="all">All Subjects</option>
+              {subjects.map(s => (
+                <option key={s.id} value={s.id}>{s.name}</option>
+              ))}
+            </Form.Select>
+          </Form.Group>
         </Card.Header>
 
         {filtered.length === 0 ? (
@@ -148,8 +158,9 @@ export default function Sessions() {
                         size="sm"
                         variant="outline-danger"
                         onClick={() => handleDelete(s.id)}
+                        aria-label={`Delete ${s.subjectName} session from ${s.date}`}
                       >
-                        ✕
+                        <span aria-hidden="true">✕</span>
                       </Button>
                     </td>
                   </tr>

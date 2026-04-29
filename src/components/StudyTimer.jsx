@@ -1,46 +1,98 @@
-import { useState, useEffect } from 'react';
-import { Card, Button, Form } from 'react-bootstrap';
+import { useState, useEffect, useRef } from 'react';
+import { Card, Button, Form, ToggleButton, ToggleButtonGroup } from 'react-bootstrap';
 
-const DEFAULT_SECONDS = 25 * 60; // 25-minute pomodoro
+const POMODORO_SECONDS = 25 * 60;
+const STOPWATCH_TARGET = 0; // 0 = no upper bound, count up forever
+
+const MODES = [
+  { value: 'pomodoro', label: 'Pomodoro', sub: '25 min countdown' },
+  { value: 'custom', label: 'Custom', sub: 'Pick your own' },
+  { value: 'stopwatch', label: 'Stopwatch', sub: 'Count up freely' },
+];
+
+function formatClock(totalSeconds) {
+  const safe = Math.max(0, totalSeconds);
+  const m = Math.floor(safe / 60);
+  const s = safe % 60;
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
 
 export default function StudyTimer(props) {
-  const [secondsLeft, setSecondsLeft] = useState(DEFAULT_SECONDS);
+  const [mode, setMode] = useState('pomodoro');
+  const [customMinutes, setCustomMinutes] = useState(45);
+  const [targetSeconds, setTargetSeconds] = useState(POMODORO_SECONDS);
+  const [secondsElapsed, setSecondsElapsed] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
   const [subjectId, setSubjectId] = useState(
     props.subjects.length > 0 ? String(props.subjects[0].id) : ''
   );
+  const [error, setError] = useState('');
 
-  // Tick down every second while running
+  // Live region announcement for screen readers when timer auto-completes
+  const [liveMessage, setLiveMessage] = useState('');
+  const autoEndedRef = useRef(false);
+
+  // Tick — the timer always counts up internally; target tells us when to stop
   useEffect(() => {
     if (!isRunning) return;
     const interval = setInterval(() => {
-      setSecondsLeft(s => {
-        if (s <= 1) {
+      setSecondsElapsed(prev => {
+        const next = prev + 1;
+        if (targetSeconds > 0 && next >= targetSeconds) {
+          autoEndedRef.current = true;
           setIsRunning(false);
-          return 0;
+          return targetSeconds;
         }
-        return s - 1;
+        return next;
       });
     }, 1000);
     return () => clearInterval(interval);
-  }, [isRunning]);
+  }, [isRunning, targetSeconds]);
 
-  const minutes = Math.floor(secondsLeft / 60);
-  const seconds = secondsLeft % 60;
-  const display =
-    `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+  // Announce when the countdown auto-completes
+  useEffect(() => {
+    if (autoEndedRef.current && !isRunning && secondsElapsed === targetSeconds && targetSeconds > 0) {
+      setLiveMessage('Session complete. Time is up.');
+      autoEndedRef.current = false;
+    }
+  }, [isRunning, secondsElapsed, targetSeconds]);
 
-  const isPaused = !isRunning && secondsLeft < DEFAULT_SECONDS;
+  const isCountdown = targetSeconds > 0;
+  const displaySeconds = isCountdown ? targetSeconds - secondsElapsed : secondsElapsed;
+  const isPaused = !isRunning && secondsElapsed > 0;
 
   let subtitle = 'Ready to dive into deep work?';
-  if (isRunning) subtitle = 'Deep focus in progress...';
+  if (isRunning) subtitle = 'Deep focus in progress…';
   else if (isPaused) subtitle = 'Paused — press resume to continue';
+
+  function applyMode(nextMode) {
+    if (isRunning || secondsElapsed > 0) {
+      // Don't blow away an in-progress session silently
+      if (!window.confirm('Switching modes will reset the current session. Continue?')) return;
+    }
+    setMode(nextMode);
+    setIsRunning(false);
+    setSecondsElapsed(0);
+    setError('');
+    if (nextMode === 'pomodoro') setTargetSeconds(POMODORO_SECONDS);
+    else if (nextMode === 'stopwatch') setTargetSeconds(STOPWATCH_TARGET);
+    else setTargetSeconds(Math.max(1, Number(customMinutes) || 1) * 60);
+  }
+
+  function applyCustomMinutes(value) {
+    setCustomMinutes(value);
+    if (mode === 'custom' && !isRunning && secondsElapsed === 0) {
+      const mins = Math.max(1, Number(value) || 1);
+      setTargetSeconds(mins * 60);
+    }
+  }
 
   function handleStart() {
     if (!subjectId) {
-      alert('Pick a subject first!');
+      setError('Pick a subject first.');
       return;
     }
+    setError('');
     setIsRunning(true);
   }
 
@@ -50,56 +102,120 @@ export default function StudyTimer(props) {
 
   function handleReset() {
     setIsRunning(false);
-    setSecondsLeft(DEFAULT_SECONDS);
+    setSecondsElapsed(0);
+    setLiveMessage('');
   }
 
   function handleEndSession() {
-    const minutesStudied = Math.ceil((DEFAULT_SECONDS - secondsLeft) / 60);
+    const minutesStudied = Math.ceil(secondsElapsed / 60);
     if (minutesStudied <= 0) {
-      alert('Start the timer first!');
+      setError('Start the timer first.');
       return;
     }
     const subject = props.subjects.find(s => String(s.id) === subjectId);
     if (!subject) {
-      alert('Pick a subject first!');
+      setError('Pick a subject first.');
       return;
     }
+    setError('');
     setIsRunning(false);
     props.onEndSession(minutesStudied, subject.id);
-    setSecondsLeft(DEFAULT_SECONDS);
+    setSecondsElapsed(0);
   }
+
+  const activeMode = MODES.find(m => m.value === mode);
 
   return (
     <Card className="h-100 text-center">
       <Card.Body className="p-4 d-flex flex-column">
-        <h4 className="mb-1">Smart Timer</h4>
-        <p className="text-muted mb-4">{subtitle}</p>
+        <h2 className="h4 mb-1">Smart Timer</h2>
+        <p style={{ color: 'var(--muted-strong)' }} className="mb-3">{subtitle}</p>
 
-        <div className="sf-timer-display">{display}</div>
+        <div role="group" aria-label="Timer mode" className="mb-3">
+          <ToggleButtonGroup
+            type="radio"
+            name="timer-mode"
+            value={mode}
+            onChange={applyMode}
+            className="w-100"
+          >
+            {MODES.map(m => (
+              <ToggleButton
+                key={m.value}
+                id={`timer-mode-${m.value}`}
+                value={m.value}
+                variant={mode === m.value ? 'primary' : 'outline-primary'}
+                disabled={isRunning}
+              >
+                {m.label}
+              </ToggleButton>
+            ))}
+          </ToggleButtonGroup>
+          <div className="small mt-1" style={{ color: 'var(--muted-strong)' }}>
+            {activeMode?.sub}
+          </div>
+        </div>
 
-        <div className="sf-pill mb-3 mt-2">POMODORO MODE</div>
+        <div className="sf-timer-display" aria-live="off">
+          {formatClock(displaySeconds)}
+        </div>
 
-        <Form.Select
-          value={subjectId}
-          onChange={e => setSubjectId(e.target.value)}
-          disabled={isRunning}
-          className="mb-3"
-          aria-label="Select subject"
-        >
-          {props.subjects.length === 0 && <option value="">No subjects yet — add one first</option>}
-          {props.subjects.map(s => (
-            <option key={s.id} value={s.id}>{s.name}</option>
-          ))}
-        </Form.Select>
+        <div className="sf-pill mb-3 mt-2" aria-hidden="true">
+          {mode === 'pomodoro' && 'POMODORO MODE'}
+          {mode === 'custom' && 'CUSTOM TIMER'}
+          {mode === 'stopwatch' && 'STOPWATCH MODE'}
+        </div>
+
+        {mode === 'custom' && (
+          <Form.Group controlId="timer-custom-minutes" className="mb-3 text-start">
+            <Form.Label className="small mb-1" style={{ color: 'var(--muted-strong)' }}>
+              Custom duration (minutes)
+            </Form.Label>
+            <Form.Control
+              type="number"
+              min={1}
+              max={240}
+              step={1}
+              value={customMinutes}
+              onChange={e => applyCustomMinutes(e.target.value)}
+              disabled={isRunning || secondsElapsed > 0}
+            />
+          </Form.Group>
+        )}
+
+        <Form.Group controlId="timer-subject" className="mb-3 text-start">
+          <Form.Label className="small mb-1" style={{ color: 'var(--muted-strong)' }}>
+            Subject
+          </Form.Label>
+          <Form.Select
+            value={subjectId}
+            onChange={e => setSubjectId(e.target.value)}
+            disabled={isRunning}
+          >
+            {props.subjects.length === 0 && (
+              <option value="">No subjects yet — add one first</option>
+            )}
+            {props.subjects.map(s => (
+              <option key={s.id} value={s.id}>{s.name}</option>
+            ))}
+          </Form.Select>
+        </Form.Group>
+
+        {error && (
+          <div role="alert" className="small mb-2" style={{ color: 'var(--danger-text)' }}>
+            {error}
+          </div>
+        )}
 
         <div className="d-grid gap-2">
           {!isRunning ? (
             <Button variant="primary" size="lg" onClick={handleStart}>
-              ▶ {isPaused ? 'Resume Session' : 'Start Session'}
+              <span aria-hidden="true">▶ </span>
+              {isPaused ? 'Resume Session' : 'Start Session'}
             </Button>
           ) : (
             <Button variant="warning" size="lg" onClick={handlePause}>
-              ⏸ Pause
+              <span aria-hidden="true">⏸ </span>Pause
             </Button>
           )}
 
@@ -111,6 +227,10 @@ export default function StudyTimer(props) {
               End Session
             </Button>
           </div>
+        </div>
+
+        <div className="visually-hidden" role="status" aria-live="polite">
+          {liveMessage}
         </div>
       </Card.Body>
     </Card>

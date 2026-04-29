@@ -61,12 +61,14 @@ export default function SubjectManager() {
         <Button
           variant="primary"
           onClick={() => setShowForm(prev => !prev)}
+          aria-expanded={showForm}
+          aria-controls="subject-form-region"
         >
-          {showForm ? '× Close' : '+ Add New Subject'}
+          {showForm ? 'Close form' : 'Add new subject'}
         </Button>
       </div>
 
-      <Row className="g-4">
+      <Row className="g-4" id="subject-form-region">
         {showForm && (
           <Col lg={4}>
             <SubjectForm onAdd={handleAdd} />

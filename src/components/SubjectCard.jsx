@@ -30,7 +30,7 @@ export default function SubjectCard(props) {
               {initial}
             </div>
             <div>
-              <h5 className="mb-0">{subject.name}</h5>
+              <h3 className="h5 mb-0">{subject.name}</h3>
               <small className="text-muted">
                 Goal: {weeklyGoal} hours / week
               </small>
@@ -42,19 +42,23 @@ export default function SubjectCard(props) {
         </div>
 
         <div className="d-flex justify-content-between small mb-1">
-          <span className="text-muted">Weekly Progress</span>
-          <span style={{ color: subject.color, fontWeight: 600 }}>
+          <span style={{ color: 'var(--muted-strong)' }}>Weekly Progress</span>
+          <span style={{ color: 'var(--text-dark)', fontWeight: 600 }}>
             {hoursStudied} / {weeklyGoal} Hours ({percent}%)
           </span>
         </div>
-        <div className="progress" style={{ height: 8 }}>
+        <div
+          className="progress"
+          style={{ height: 8 }}
+          role="progressbar"
+          aria-label={`${subject.name} weekly progress`}
+          aria-valuenow={percent}
+          aria-valuemin="0"
+          aria-valuemax="100"
+        >
           <div
             className="progress-bar"
-            role="progressbar"
             style={{ width: `${percent}%`, background: subject.color }}
-            aria-valuenow={percent}
-            aria-valuemin="0"
-            aria-valuemax="100"
           />
         </div>
       </Card.Body>

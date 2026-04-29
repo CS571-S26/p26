@@ -5,7 +5,7 @@ export default function Layout() {
   return (
     <div className="sf-app">
       <Sidebar />
-      <main className="sf-main">
+      <main id="main-content" className="sf-main" tabIndex={-1}>
         <Outlet />
       </main>
     </div>

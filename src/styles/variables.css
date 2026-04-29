@@ -14,11 +14,18 @@
   --text-light: #6b7280;
   --border-color: #e5e7eb;
 
-  /* Status Colors */
+  /* Status Colors — bright variants are for graphics only (≥3:1) */
   --success: #10b981;
   --warning: #f59e0b;
   --danger: #ef4444;
   --info: #3b82f6;
+
+  /* AA-compliant text variants (≥4.5:1 on white) */
+  --success-text: #047857;
+  --warning-text: #b45309;
+  --danger-text: #b91c1c;
+  --info-text: #1d4ed8;
+  --muted-strong: #4b5563;
 
   /* Spacing */
   --spacing-xs: 0.25rem;
